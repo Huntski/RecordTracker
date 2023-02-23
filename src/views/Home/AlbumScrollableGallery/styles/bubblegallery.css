@@ -1,0 +1,246 @@
+html, body {
+    position: relative;
+    overflow: hidden;
+    max-height: -moz-available;
+    max-height: -webkit-fill-available;
+    max-height: fill-available;
+    background: linear-gradient(to bottom right, #dedede, #fff);
+}
+
+html {
+    height: 100%;
+    height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;
+}
+
+:root {
+    --gallery-gap: 1vw;
+    --bubble-width: 20vw;
+}
+
+.move-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#gallery {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    gap: var(--gallery-gap);
+}
+
+#gallery:active {
+    cursor: grabbing;
+}
+
+.row {
+    display: flex;
+    gap: var(--gallery-gap);
+}
+
+.row:nth-child(odd) {
+    margin-left: calc(var(--bubble-width) + (var(--gallery-gap) / 2));
+}
+
+.bubble {
+    position: relative;
+    width: var(--bubble-width);
+    height: var(--bubble-width);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.bubble:focus,
+.bubble:active {
+    opacity: .9;
+}
+
+.bubble-popup {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80vh;
+    box-sizing: border-box;
+    background: #262626;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    color: white;
+    animation: slideUp 200ms ease-out;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.bubble-popup[data-open="0"] {
+    transition: bottom 200ms ease-in;
+    bottom: -100%;
+}
+
+.bubble-popup__top-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+    height: 300px;
+    box-sizing: border-box;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.bubble-popup__top-section img {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.bubble-popup__actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+}
+
+.like-button {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    background: var(--color-dark-tab);
+}
+.like-button .icon {
+    width: 20px;
+}
+
+.bubble-popup__types {
+    padding: 10px;
+}
+
+.bubble-popup__types span {
+    font-size: .7em;
+    color: white;
+    border-radius: 50px;
+    background: var(--color-red);
+    padding: 5px 10px;
+}
+
+.bubble-popup__types span:nth-child(even) {
+    background: var(--color-blue);
+}
+
+.bubble-popup__info {
+    padding: 20px;
+    font-size: .8em;
+}
+
+.bubble-popup__info span {
+    font-weight: bold;
+}
+
+.bubble-popup__button {
+    text-transform: uppercase;
+    align-self: flex-end;
+    margin: auto 20px 20px 20px;
+    color: white;
+    padding: 10px 20px;
+    background: #55A3FF;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    border-radius: 50px;
+}
+
+.bubble-popup__comments {
+    padding: 20px;
+    display: grid;
+    gap: 15px;
+}
+
+.comment {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.comment__avatar {
+    width: 40px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.comment__username {
+    color: #969696;
+    font-size: .9em;
+}
+
+.comment-input-field {
+    box-sizing: border-box;
+    margin: auto 20px 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: #313131;
+    color: white;
+
+}
+
+.gallery-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 12px;
+    display: flex;
+    align-items: center;
+}
+
+/*
+    Animations
+ */
+
+@keyframes bubbleFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        bottom: -100%;
+    }
+
+    to {
+        bottom: 0;
+    }
+}
