@@ -1,0 +1,76 @@
+html, body {
+    position: relative;
+    overflow: hidden;
+}
+
+:root {
+    --gallery-gap: 1vh;
+    --bubble-width: 25vh;
+}
+
+.move-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#gallery {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    gap: var(--gallery-gap);
+}
+
+#gallery:active {
+    cursor: grabbing;
+}
+
+.row {
+    display: flex;
+    gap: calc(var(--gallery-gap) * 2);
+}
+
+.row:nth-child(odd) {
+    margin-left: calc(var(--bubble-width) + (var(--gallery-gap) / 2));
+}
+
+.bubble {
+    position: relative;
+    width: var(--bubble-width);
+    height: var(--bubble-width);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: #575757;
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.bubble:focus,
+.bubble:active {
+    opacity: .9;
+}
+
+/*
+    Animations
+ */
+
+@keyframes bubbleFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

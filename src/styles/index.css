@@ -1,3 +1,29 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.base-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    padding-right: 3px;
+}
+
+.base-scrollbar::-webkit-scrollbar-track {
+    background: none;
+}
+
+.base-scrollbar::-webkit-scrollbar-thumb {
+    background: #575757;
+    border-radius: 20px;
+}
+
+.base-scrollbar::-webkit-scrollbar-thumb:hover,
+.base-scrollbar::-webkit-scrollbar-thumb:focus,
+.base-scrollbar::-webkit-scrollbar-thumb:active {
+    background: #696969;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
