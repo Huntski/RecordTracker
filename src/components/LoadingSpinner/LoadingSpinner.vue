@@ -11,7 +11,7 @@ export default {
 
 <style>
 .spinner {
-    animation: spin 300ms infinite;
+    animation: spin 1s infinite;
 }
 
 @keyframes spin {

@@ -20,11 +20,18 @@ module.exports = {
           'bg-hover': '#4f4f4f'
         },
 
+        'dominant': '#DBFF4A',
+
+        'filter-button': {
+          'active': '#DBFF4A',
+          'passive': '#373737'
+        },
+
         'gray': {
           '200': '#dadada',
           '300': '#a8a8a8',
           '400': '#757575',
-        }
+        },
       },
 
       fontFamily: {

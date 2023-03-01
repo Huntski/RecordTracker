@@ -3,13 +3,25 @@
         class="absolute z-20 top-0 left-0 right-0 w-full h-full flex flex-col items-center"
         :class="{'hidden' : !open}"
     >
-        <div class="bg-overlay absolute top-0 left-0 w-full h-full" @click="toggleWindow"></div>
+        <div class="bg-overlay absolute top-0 left-0 w-full h-full" @click="closeWindow"></div>
 
         <div class="relative max-w-3xl z-20 w-full mt-20">
             <BaseField class="w-full">
-                <SearchBar v-model:value="searchQuery" @search="handleSearchEvent" />
+                <SearchBar v-model:value="searchQuery" @search="handleSearchEvent" :loading="loading" />
 
-                <div class="bottom-line" v-show="showResults"></div>
+                <div class="bottom-line"></div>
+
+                <div class="flex items-center gap-3 pb-5 px-5">
+                    <SearchFilterButton :active="selectedFilter === 'albums'" @click="setFilter('albums')">
+                        <NoteIcon />
+                        <span>Albums</span>
+                    </SearchFilterButton>
+
+                    <SearchFilterButton :active="selectedFilter === 'artists'" @click="setFilter('artists')">
+                        <ArtistIcon />
+                        <span>Artists</span>
+                    </SearchFilterButton>
+                </div>
 
                 <div class="base-scrollbar max-h-96 m-2 overflow-auto px-3" v-show="showResults">
                     <ArtistSearchResults class="hidden" :artists="searchResults.artists" />
@@ -27,6 +39,8 @@ import {BaseField} from "@/components/@fields"
 import AlbumSearchResults from "@/views/Dashboard/DashboardInterface/AppSearchWindow/AlbumSearchResults"
 import ArtistSearchResults from "@/views/Dashboard/DashboardInterface/AppSearchWindow/ArtistSearchResults"
 import {globalSearchRequest} from "@/services/searchService"
+import {NoteIcon, ArtistIcon} from "@/components/@icons"
+import SearchFilterButton from "@/views/Dashboard/DashboardInterface/AppSearchWindow/SearchFilterButton"
 
 export default {
     data() {
@@ -36,9 +50,15 @@ export default {
                 albums: []
             },
 
+            selectedFilter: '',
+
             searchQuery: '',
 
             open: false,
+
+            loading: false,
+
+            typingInterval: null,
         }
     },
 
@@ -49,20 +69,37 @@ export default {
     },
 
     methods: {
-        async handleSearchEvent(query) {
+        setFilter(filter) {
+            if (this.selectedFilter === filter) {
+                return this.selectedFilter = ''
+            }
+
+            this.selectedFilter = filter
+        },
+
+        handleSearchEvent(query) {
+            if (this.typingInterval === null) {
+                this.loading = true
+
+                this.typingInterval = setTimeout(() => {
+                    this.requestSearch(query)
+                    this.typingInterval = null
+                }, 500)
+            }
+        },
+
+        async requestSearch(query) {
             if (!query) {
                 this.searchResults.albums = []
                 this.searchResults.artists = []
+            } else {
+                const results = await globalSearchRequest(query)
 
-                return
+                this.searchResults.artists = results.data.artists
+                this.searchResults.albums = results.data.albums
             }
 
-            const results = await globalSearchRequest(query)
-
-            this.searchResults.artists = results.data.artists
-            this.searchResults.albums = results.data.albums
-
-            console.log(this.searchResults)
+            this.loading = false
         },
 
         toggleWindow() {
@@ -72,6 +109,7 @@ export default {
         closeWindow() {
             this.open = false
             this.searchQuery = ''
+            this.selectedFilter = ''
         },
 
         handleKeyPressEvent(e) {
@@ -87,7 +125,7 @@ export default {
         document.addEventListener('keydown', this.handleKeyPressEvent)
     },
 
-    components: {SearchBar, BaseField, AlbumSearchResults, ArtistSearchResults}
+    components: {ArtistIcon, SearchBar, BaseField, AlbumSearchResults, ArtistSearchResults, NoteIcon, SearchFilterButton}
 }
 </script>
 

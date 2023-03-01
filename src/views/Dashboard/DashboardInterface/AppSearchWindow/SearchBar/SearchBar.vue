@@ -1,13 +1,14 @@
 <template>
-    <div class="w-full flex items-center gap-5 p-5">
-        <SpinnerIcon v-if="loading" />
+    <div class="w-full flex items-center gap-5 px-5">
+        <LoadingSpinner class="w-4" v-if="loading" />
         <SearchIcon class="w-4" v-else />
 
-        <input :value="value" ref="searchbar" @input="handleInput" class="w-full outline-none rounded pb-0.5" placeholder="Search for songs, albums, tracks...">
+        <input :value="value" ref="searchbar" @input="handleInput" class="w-full outline-none rounded py-5" placeholder="Search for songs, albums, tracks...">
     </div>
 </template>
 <script>
 import {SearchIcon} from "@/components/@icons"
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner"
 
 export default {
     props: {
@@ -24,6 +25,7 @@ export default {
 
     methods: {
         handleInput(e) {
+            this.$emit('update:value', e.target.value)
             this.$emit('search', e.target.value)
         }
     },
@@ -32,7 +34,7 @@ export default {
         this.$refs.searchbar.focus()
     },
 
-    components: {SearchIcon}
+    components: {LoadingSpinner, SearchIcon}
 }
 </script>
 
