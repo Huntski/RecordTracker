@@ -13,8 +13,6 @@ export default {
 
     mutations: {
         SET_ALBUM(state: AlbumState, payload: Album|Array<Album>): void {
-            console.log('SET ALBUM')
-
             if (Array.isArray(payload)) {
 
                 payload.forEach(album => {

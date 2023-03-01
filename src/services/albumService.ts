@@ -31,3 +31,11 @@ export async function getAlbumArtists(id: AlbumId): Promise<void> {
 
     store.commit('album/SET_ARTISTS', result.data)
 }
+
+export async function searchAlbum(query: string): Promise<ApiAlbumCollectionResponse> {
+    const url =`/albums/search?search_query=${query}`
+
+    const result = await axios.get<ApiAlbumCollectionResponse>(url)
+
+    return result.data
+}
