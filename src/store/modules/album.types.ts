@@ -1,3 +1,5 @@
+import {Genre} from "@/store/modules/genres.types";
+
 export type AlbumId = number
 
 export interface Album {
@@ -6,7 +8,8 @@ export interface Album {
     year: number,
     origin: string,
     comment: string,
-    cover_url: Url
+    cover_url: Url,
+    genres?: Array<Genre>
 }
 
 export interface NestedAlbums {
@@ -15,4 +18,5 @@ export interface NestedAlbums {
 
 export class AlbumState {
     albums: NestedAlbums = {}
+    requestedAlbumId?: AlbumId = undefined
 }

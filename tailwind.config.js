@@ -6,6 +6,10 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      '2xl': '1536px',
+    },
+
     extend: {
       colors: {
         'primary-background-color': '#1A1A1A',
@@ -36,13 +40,17 @@ module.exports = {
           '200': '#dadada',
           '300': '#a8a8a8',
           '400': '#757575',
+          '500': '#5e5e5e',
+          '600': '#525252',
+          '700': '#3a3a3a',
         },
 
         "overlay": "#00000090"
       },
 
       fontFamily: {
-        'major': 'Exo, Helvetica, sans-serif'
+        'major': 'Exo, Helvetica, sans-serif',
+        'regular': 'Poppins, Helvetica, sans-serif',
       }
     },
   },

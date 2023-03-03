@@ -4,7 +4,7 @@
 
         <DashboardInterface />
 
-        <AlbumDetailPage />
+        <AlbumDetailPage v-if="this.$store.getters['album/getRequestedAlbumId']" />
     </div>
 </template>
 

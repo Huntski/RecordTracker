@@ -3,7 +3,7 @@
         <LoadingSpinner class="w-4" v-if="loading" />
         <SearchIcon class="w-4" v-else />
 
-        <input :value="value" ref="searchbar" @input="handleInput" class="w-full outline-none rounded py-5" placeholder="Search for songs, albums, tracks...">
+        <input type="text" :value="value" autofocus ref="searchbar" @input="handleInput" class="w-full outline-none rounded py-5" placeholder="Search for songs, albums, tracks...">
     </div>
 </template>
 
@@ -28,11 +28,17 @@ export default {
         handleInput(e) {
             this.$emit('update:value', e.target.value)
             this.$emit('search', e.target.value)
+        },
+
+        focusSearchBar() {
+            console.log(this.$refs.searchbar)
+
+            this.$refs.searchbar.focus()
         }
     },
 
     mounted() {
-        this.$refs.searchbar.focus()
+        setTimeout(this.focusSearchBar, 1000);
     },
 
     components: {LoadingSpinner, SearchIcon}

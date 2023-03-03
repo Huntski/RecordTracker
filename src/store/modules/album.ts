@@ -1,4 +1,4 @@
-import {Album, AlbumState, NestedAlbums} from "@/store/modules/album.types"
+import {Album, AlbumId, AlbumState, NestedAlbums} from "@/store/modules/album.types"
 
 export default {
     namespaced: true,
@@ -8,7 +8,11 @@ export default {
     getters: {
         getAlbums(state: AlbumState): NestedAlbums {
             return state.albums
-        }
+        },
+
+        getRequestedAlbumId(state: AlbumState): AlbumId|undefined {
+            return state.requestedAlbumId
+        },
     },
 
     mutations: {
@@ -26,6 +30,10 @@ export default {
 
             const id = `album.${payload.id}`
             state.albums[id] = payload
+        },
+
+        SET_REQUESTED_ALBUM_OVERVIEW(state: AlbumState, albumId: AlbumId|undefined): void {
+            state.requestedAlbumId = albumId
         }
     },
 }

@@ -43,6 +43,10 @@ export default {
             this.createAlbumElementsWithRowsAndColumns(collection)
         },
 
+        openAlbum(id){
+            store.commit('album/SET_REQUESTED_ALBUM_OVERVIEW', id)
+        },
+
         createAlbumElementsWithRowsAndColumns(albums) {
             this.$refs.gallery.innerHTML = ''
 
@@ -111,9 +115,10 @@ export default {
 
             element.style.backgroundImage = `url(${bubble.cover_url})`
 
-            element.onclick = (e) =>
-            {
+            element.onclick = (e) => {
                 if (e.target === element) {
+                    // this.openAlbum(bubble.id)
+
                     // this.movableGallery.moveBubbleToCenterOfScreen(element)
                 }
             }

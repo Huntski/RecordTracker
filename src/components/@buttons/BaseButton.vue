@@ -26,11 +26,11 @@ export default {
 }
 
 .base-button:active .content {
-    transform: scale(.95);
+    background-image: radial-gradient(farthest-corner at 100% 40px, #333333, #181818);
+    transform: scale(.9);
 }
 
 .content {
     background-image: radial-gradient(farthest-corner at 100% 40px, #333333, #252525);
-    transition: background 300ms ease-out;
 }
 </style>

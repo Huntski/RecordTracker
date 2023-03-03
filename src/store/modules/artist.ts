@@ -1,4 +1,4 @@
-import {Artist, ArtistState, NestedArtists} from "@/store/modules/artists.types";
+import {Artist, ArtistState, NestedArtists} from "@/store/modules/artist.types";
 
 export default {
     namespaced: true,

@@ -55,11 +55,6 @@ html, body {
     -webkit-box-sizing: border-box;
 }
 
-.bubble:focus,
-.bubble:active {
-    opacity: .9;
-}
-
 /*
     Animations
  */

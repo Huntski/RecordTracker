@@ -5,7 +5,7 @@
     >
         <BackgroundOverlay @click="closeWindow" />
 
-        <div class="search-base-field relative max-w-3xl z-20 w-full mt-20" :class="{'active' : showResults}">
+        <div class="search-base-field relative max-w-3xl z-20 w-full mt-20" :class="{'active' : showResults || noResultsReturned}">
             <BaseField>
                 <SearchBar v-model:value="searchQuery" @search="handleSearchEvent" :loading="loading" />
 
@@ -25,10 +25,12 @@
                     </div>
 
                     <div class="base-scrollbar search-results mx-2 overflow-auto px-3" v-show="showResults">
-                        <ArtistSearchResults class="mb-5" :artists="searchResults.artists" v-show="searchResults.artists.length" />
+                        <ArtistSearchResults @close="closeWindow" class="mb-5" :artists="searchResults.artists" v-show="searchResults.artists.length" />
 
-                        <AlbumSearchResults :albums="searchResults.albums" />
+                        <AlbumSearchResults @close="closeWindow" :albums="searchResults.albums" />
                     </div>
+
+                    <div v-if="noResultsReturned" class="px-6 text-sm font-bold text-gray-200">No results matched your search.</div>
                 </div>
             </BaseField>
         </div>
@@ -65,9 +67,19 @@ export default {
         }
     },
 
+    watch: {
+        selectedFilter(newFilter) {
+            this.handleSearchEvent()
+        }
+    },
+
     computed: {
         showResults() {
             return this.searchResults.artists.length || this.searchResults.albums.length
+        },
+
+        noResultsReturned() {
+            return !this.searchResults.artists.length && !this.searchResults.albums.length && this.searchQuery.length && !this.loading
         }
     },
 
@@ -80,10 +92,10 @@ export default {
             this.selectedFilter = filter
         },
 
-        handleSearchEvent(query) {
+        handleSearchEvent() {
             this.loading = true
 
-            this.requestSearch(query)
+            this.requestSearch()
 
             if (this.typingInterval === null) {
                 clearTimeout(this.typingInterval)
@@ -96,17 +108,20 @@ export default {
             }, 800)
         },
 
-        async requestSearch(query) {
-            if (!query) {
+        async requestSearch() {
+            try {
+                if (!this.searchQuery) {
+                    this.searchResults.albums = []
+                    this.searchResults.artists = []
+                } else {
+                    const results = await globalSearchRequest(this.searchQuery)
+
+                    this.searchResults.artists = results.artists
+                    this.searchResults.albums = results.albums
+                }
+            } catch (e) {
                 this.searchResults.albums = []
                 this.searchResults.artists = []
-            } else {
-                const results = await globalSearchRequest(query)
-
-                console.log(results.data.artists)
-
-                this.searchResults.artists = results.data.artists
-                this.searchResults.albums = results.data.albums
             }
         },
 
@@ -115,21 +130,25 @@ export default {
         },
 
         openWindow() {
-            this.resetSearch()
+            this.resetAllFields()
             this.open = true
         },
 
-        resetSearch() {
-            this.open = false
-            this.searchQuery = ''
-            this.selectedFilter = ''
+        resetSearchResults() {
             this.searchResults.albums = []
             this.searchResults.artists = []
         },
 
+        resetAllFields() {
+            this.open = false
+            this.searchQuery = ''
+            this.selectedFilter = ''
+            this.resetSearchResults()
+        },
+
         closeWindow() {
             this.open = false
-            this.resetSearch()
+            this.resetAllFields()
         },
 
         handleKeyPressEvent(e) {

@@ -27,5 +27,6 @@ export default {
 
 .content {
     background-image: radial-gradient(farthest-corner at 100% 40px, #333333, #252525);
+    transition: all 1s ease-out;
 }
 </style>

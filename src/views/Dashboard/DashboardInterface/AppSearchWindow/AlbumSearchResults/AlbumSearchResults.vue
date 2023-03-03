@@ -1,28 +1,33 @@
 <template>
     <div class="grid grid-cols-4 gap-3">
-        <div v-for="album in albums" :key="album.id" @click="openAlbum">
-            <img :src="album.cover_url" :alt="album.title" class="album-cover rounded">
+        <div v-for="album in albums" :key="album.id" @click="openAlbum(album.id)" class="relative rounded overflow-hidden cursor-pointer">
+            <div class="bg-overlay absolute w-full h-full opacity-10 hover:opacity-0"></div>
+            <img :src="album.cover_url" :alt="album.title" class="album-cover">
         </div>
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import store from "@/store"
+import {AlbumId} from "@/store/modules/album.types"
+import {defineComponent, PropType} from "vue"
+import {Album} from "@/store/modules/album.types"
+
+export default defineComponent({
     props: {
         albums: {
-            type: Object,
+            type: Object as PropType<Array<Album>>,
             required: false,
         }
     },
 
     methods: {
-        openAlbum() {
-            this.$root.$refs.appDetailPage.openWindow()
-
-
+        openAlbum(id: AlbumId): void {
+            store.commit('album/SET_REQUESTED_ALBUM_OVERVIEW', id)
+            this.$emit('close')
         }
     }
-}
+})
 </script>
 
 <style>
