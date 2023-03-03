@@ -1,14 +1,14 @@
 <template>
-    <BaseField :rounded="true">
+    <BaseButton :rounded="true">
         <SearchIcon class="w-14 p-4" />
-    </BaseField>
+    </BaseButton>
 </template>
 
 <script>
-import BaseField from "@/components/@fields/BaseField"
+import {BaseButton} from "@/components/@buttons"
 import {SearchIcon} from "@/components/@icons"
 
 export default {
-    components: {SearchIcon, BaseField}
+    components: {SearchIcon, BaseButton}
 }
 </script>

@@ -6,7 +6,7 @@
             <PlaylistOptions :options="items" />
         </div>
 
-        <button class="flex items-center p-4 gap-10 font-major font-bold" @click="open = !open">
+        <button class="flex outline-none items-center p-4 gap-10 font-major font-bold" @click="open = !open">
             <span>Playlists</span>
 
             <SmallArrowIcon class="w-3 transform" :class="{'rotate-180' : !open}" />

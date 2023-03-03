@@ -1,11 +1,11 @@
 <template>
     <div>
-        <AppSearchWindow ref="appsearchwindow" />
+        <AppSearchWindow ref="appSearchWindow" />
 
         <div id="bottom-actions" class="absolute bottom-0 w-full flex justify-between items-end p-5">
             <PlayListSelecter />
 
-            <SearchButton @click="toggleWindow" />
+            <SearchButton @click="openSearchWindow" />
         </div>
     </div>
 </template>
@@ -17,8 +17,8 @@ import AppSearchWindow from "@/views/Dashboard/DashboardInterface/AppSearchWindo
 
 export default {
     methods: {
-        toggleWindow() {
-            this.$refs.appsearchwindow.toggleWindow()
+        openSearchWindow() {
+            this.$refs.appSearchWindow.openWindow()
         }
     },
 

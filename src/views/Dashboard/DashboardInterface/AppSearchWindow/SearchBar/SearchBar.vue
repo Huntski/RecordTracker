@@ -6,6 +6,7 @@
         <input :value="value" ref="searchbar" @input="handleInput" class="w-full outline-none rounded py-5" placeholder="Search for songs, albums, tracks...">
     </div>
 </template>
+
 <script>
 import {SearchIcon} from "@/components/@icons"
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner"

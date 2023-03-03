@@ -3,30 +3,32 @@
         class="absolute z-20 top-0 left-0 right-0 w-full h-full flex flex-col items-center"
         :class="{'hidden' : !open}"
     >
-        <div class="bg-overlay absolute top-0 left-0 w-full h-full" @click="closeWindow"></div>
+        <BackgroundOverlay @click="closeWindow" />
 
-        <div class="relative max-w-3xl z-20 w-full mt-20">
-            <BaseField class="w-full">
+        <div class="search-base-field relative max-w-3xl z-20 w-full mt-20" :class="{'active' : showResults}">
+            <BaseField>
                 <SearchBar v-model:value="searchQuery" @search="handleSearchEvent" :loading="loading" />
 
                 <div class="bottom-line"></div>
 
-                <div class="flex items-center gap-3 pb-5 px-5">
-                    <SearchFilterButton :active="selectedFilter === 'albums'" @click="setFilter('albums')">
-                        <NoteIcon />
-                        <span>Albums</span>
-                    </SearchFilterButton>
+                <div class="grid gap-5 py-5">
+                    <div class="flex items-center gap-3 px-5">
+                        <SearchFilterButton :active="selectedFilter === 'albums'" @click="setFilter('albums')">
+                            <NoteIcon />
+                            <span>Albums</span>
+                        </SearchFilterButton>
 
-                    <SearchFilterButton :active="selectedFilter === 'artists'" @click="setFilter('artists')">
-                        <ArtistIcon />
-                        <span>Artists</span>
-                    </SearchFilterButton>
-                </div>
+                        <SearchFilterButton :active="selectedFilter === 'artists'" @click="setFilter('artists')">
+                            <ArtistIcon />
+                            <span>Artists</span>
+                        </SearchFilterButton>
+                    </div>
 
-                <div class="base-scrollbar max-h-96 m-2 overflow-auto px-3" v-show="showResults">
-                    <ArtistSearchResults class="hidden" :artists="searchResults.artists" />
+                    <div class="base-scrollbar search-results mx-2 overflow-auto px-3" v-show="showResults">
+                        <ArtistSearchResults class="mb-5" :artists="searchResults.artists" v-show="searchResults.artists.length" />
 
-                    <AlbumSearchResults :albums="searchResults.albums" />
+                        <AlbumSearchResults :albums="searchResults.albums" />
+                    </div>
                 </div>
             </BaseField>
         </div>
@@ -41,6 +43,7 @@ import ArtistSearchResults from "@/views/Dashboard/DashboardInterface/AppSearchW
 import {globalSearchRequest} from "@/services/searchService"
 import {NoteIcon, ArtistIcon} from "@/components/@icons"
 import SearchFilterButton from "@/views/Dashboard/DashboardInterface/AppSearchWindow/SearchFilterButton"
+import BackgroundOverlay from "@/components/BackgroundOverlay"
 
 export default {
     data() {
@@ -78,14 +81,19 @@ export default {
         },
 
         handleSearchEvent(query) {
-            if (this.typingInterval === null) {
-                this.loading = true
+            this.loading = true
 
-                this.typingInterval = setTimeout(() => {
-                    this.requestSearch(query)
-                    this.typingInterval = null
-                }, 500)
+            this.requestSearch(query)
+
+            if (this.typingInterval === null) {
+                clearTimeout(this.typingInterval)
             }
+
+            this.typingInterval = setTimeout(() => {
+                this.typingInterval = null
+
+                this.loading = false
+            }, 800)
         },
 
         async requestSearch(query) {
@@ -95,21 +103,33 @@ export default {
             } else {
                 const results = await globalSearchRequest(query)
 
+                console.log(results.data.artists)
+
                 this.searchResults.artists = results.data.artists
                 this.searchResults.albums = results.data.albums
             }
-
-            this.loading = false
         },
 
         toggleWindow() {
             this.open = !this.open
         },
 
-        closeWindow() {
+        openWindow() {
+            this.resetSearch()
+            this.open = true
+        },
+
+        resetSearch() {
             this.open = false
             this.searchQuery = ''
             this.selectedFilter = ''
+            this.searchResults.albums = []
+            this.searchResults.artists = []
+        },
+
+        closeWindow() {
+            this.open = false
+            this.resetSearch()
         },
 
         handleKeyPressEvent(e) {
@@ -125,19 +145,28 @@ export default {
         document.addEventListener('keydown', this.handleKeyPressEvent)
     },
 
-    components: {ArtistIcon, SearchBar, BaseField, AlbumSearchResults, ArtistSearchResults, NoteIcon, SearchFilterButton}
+    components: {ArtistIcon, SearchBar, BaseField, AlbumSearchResults, ArtistSearchResults, NoteIcon, SearchFilterButton, BackgroundOverlay}
 }
 </script>
 
 <style>
-.bg-overlay {
-    background: #00000090;
+.search-base-field {
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-height 300ms ease-out;
+}
+
+.search-base-field.active {
+    max-height: 80vh;
+}
+
+.search-results {
+    max-height: 50vh;
 }
 
 .bottom-line {
-    @apply m-auto rounded mx-5 mb-5;
+    @apply m-auto rounded mx-5;
     background: #3C3C3C;
     height: 0.15rem;
-
 }
 </style>

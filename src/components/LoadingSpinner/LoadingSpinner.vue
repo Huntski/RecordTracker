@@ -11,10 +11,14 @@ export default {
 
 <style>
 .spinner {
-    animation: spin 1s infinite;
+    animation: spin 500ms linear infinite;
 }
 
 @keyframes spin {
+    from {
+        rotate: 0deg;
+    }
+
     to {
         rotate: 360deg;
     }

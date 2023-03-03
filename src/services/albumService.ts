@@ -20,10 +20,12 @@ export async function getAlbumCollection(): Promise<void> {
     }
 }
 
-export async function getAlbum(id: AlbumId): Promise<void> {
+export async function getAlbum(id: AlbumId): Promise<ApiAlbumResponse> {
     const result = await axios.get<ApiAlbumResponse>(`/albums/${id}`)
 
     store.commit('album/SET_ALBUM', result.data)
+
+    return result.data
 }
 
 export async function getAlbumArtists(id: AlbumId): Promise<void> {

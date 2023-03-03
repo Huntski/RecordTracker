@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-4 gap-3">
-        <div v-for="album in albums" :key="album.id">
+        <div v-for="album in albums" :key="album.id" @click="openAlbum">
             <img :src="album.cover_url" :alt="album.title" class="album-cover rounded">
         </div>
     </div>
@@ -14,6 +14,14 @@ export default {
             required: false,
         }
     },
+
+    methods: {
+        openAlbum() {
+            this.$root.$refs.appDetailPage.openWindow()
+
+
+        }
+    }
 }
 </script>
 

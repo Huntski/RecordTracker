@@ -3,7 +3,7 @@
         <li
             v-for="playlist in options"
             :key="playlist"
-            class="hover:text-white py-1.5 px-4"
+            class="hover:text-white py-1.5 px-4 cursor-pointer"
         >{{playlist}}</li>
     </ul>
 </template>

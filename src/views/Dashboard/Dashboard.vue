@@ -3,14 +3,17 @@
         <AlbumScrollableGallery />
 
         <DashboardInterface />
+
+        <AlbumDetailPage />
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import DashboardInterface from "@/views/Dashboard/DashboardInterface"
 import AlbumScrollableGallery from "@/views/Dashboard/AlbumScrollableGallery"
+import AlbumDetailPage from "@/views/Dashboard/AlbumDetailPage"
 
 export default {
-    components: {AlbumScrollableGallery, DashboardInterface},
+    components: {AlbumScrollableGallery, DashboardInterface, AlbumDetailPage},
 }
 </script>

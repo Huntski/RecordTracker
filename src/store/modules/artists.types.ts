@@ -4,7 +4,8 @@ export interface Artist {
     id: ArtistId,
     name: string,
     real_name: string,
-    image_url: Url
+    image_url: Url,
+    bio: string
 }
 
 export interface NestedArtists {

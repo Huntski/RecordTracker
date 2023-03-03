@@ -27,11 +27,18 @@ module.exports = {
           'passive': '#373737'
         },
 
+        'close-button': {
+            'bg': '#171717',
+            'bg-hover': '#252525',
+        },
+
         'gray': {
           '200': '#dadada',
           '300': '#a8a8a8',
           '400': '#757575',
         },
+
+        "overlay": "#00000090"
       },
 
       fontFamily: {
@@ -40,7 +47,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      // transform: ['group-active'],
+      // scale: ['group-active']
+    },
   },
   plugins: [],
 }
