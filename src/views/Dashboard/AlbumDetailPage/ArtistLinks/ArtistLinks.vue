@@ -12,12 +12,12 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from "vue"
-import {Artist} from "@/store/modules/artist.types";
+import {Artist} from "@/store/modules/artist.types"
 
 export default defineComponent({
     props: {
         artists: {
-            type: Object as PropType<Array<Artist>>,
+            type: Object as PropType<Artist[]>,
             required: true,
         }
     },

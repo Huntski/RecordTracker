@@ -1,6 +1,6 @@
 <template>
     <div
-        class="base-field relative flex items-center text-white bg-primary-button-bg p-1.5 rounded-2xl border-primary-button-border border-8 active:border-green-400"
+        class="base-field relative flex items-center text-white bg-primary-button-bg p-1.5 rounded-2xl border-primary-button-border border-8"
         :class="{'rounded-full' : rounded}"
     >
         <div class="content rounded relative w-full" :class="{'rounded-full' : rounded}">

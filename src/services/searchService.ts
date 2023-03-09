@@ -1,14 +1,14 @@
-import axios from "axios/index";
-import {Album} from "@/store/modules/album.types";
-import {Artist} from "@/store/modules/artist.types";
+import axios from "axios/index"
+import {Album} from "@/store/modules/album.types"
+import {Artist} from "@/store/modules/artist.types"
 
 export interface ApiSearchResponse {
     data: ApiSearchResponseData
 }
 
 export interface ApiSearchResponseData {
-    artists: Array<Artist>,
-    albums: Array<Album>,
+    artists: Artist[],
+    albums: Album[],
 }
 
 export async function globalSearchRequest(query: string): Promise<ApiSearchResponseData> {

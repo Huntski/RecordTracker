@@ -8,7 +8,7 @@
 import './styles/bubblegallery.css'
 import store from "@/store"
 import {getAlbumCollection} from "@/services/albumService"
-import {MovableGallery} from "@/views/Dashboard/AlbumScrollableGallery/compasables/MovableGallery";
+import {MovableGallery} from "@/views/Dashboard/AlbumScrollableGallery/compasables/MovableGallery"
 
 export default {
     data() {

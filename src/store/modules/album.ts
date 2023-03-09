@@ -16,7 +16,7 @@ export default {
     },
 
     mutations: {
-        SET_ALBUM(state: AlbumState, payload: Album|Array<Album>): void {
+        SET_ALBUM(state: AlbumState, payload: Album|Album[]): void {
             if (Array.isArray(payload)) {
 
                 payload.forEach(album => {
@@ -30,6 +30,18 @@ export default {
 
             const id = `album.${payload.id}`
             state.albums[id] = payload
+        },
+
+        SET_COLLECTION(state: AlbumState, payload: Album[]): void {
+            if (Object.keys(state.albums).length) {
+                state.albums = {}
+            }
+
+            payload.forEach(album => {
+                const id = `album.${album.id}`
+
+                state.albums[id] = album
+            })
         },
 
         SET_REQUESTED_ALBUM_OVERVIEW(state: AlbumState, albumId: AlbumId|undefined): void {

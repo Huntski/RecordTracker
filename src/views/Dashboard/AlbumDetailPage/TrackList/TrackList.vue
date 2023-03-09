@@ -2,7 +2,7 @@
     <div>
         <h2 class="px-5 text-xl pb-5">TrackList</h2>
 
-        <div class="table-list rounded-lg text-xs overflow-y-scroll base-scrollbar shadow-lg border border-black 2xl:max-h-80">
+        <div class="bg-gradient-to-b bg-section-start bg-section-end rounded text-xs overflow-y-scroll base-scrollbar shadow border border-black xl:max-h-72 last:border-none">
             <div v-for="(track, index) in tracks"
                  :key="track.id"
                  class="track flex items-center ml-5 py-3 border-b border-solid border-gray-700"
@@ -23,19 +23,9 @@ import {Track} from "@/store/modules/track.types"
 export default defineComponent({
     props: {
         tracks: {
-            type: Object as PropType<Array<Track>>,
+            type: Object as PropType<Track[]>,
             required: true,
         }
     },
 })
 </script>
-
-<style>
-.table-list {
-    background-image: linear-gradient(to bottom, #303030, #1f1f1f);
-}
-
-.table-list .track:last-child {
-    border: none;
-}
-</style>

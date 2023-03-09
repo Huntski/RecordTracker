@@ -9,14 +9,13 @@
 
 <script lang="ts">
 import store from "@/store"
-import {AlbumId} from "@/store/modules/album.types"
+import {AlbumId, Album} from "@/store/modules/album.types"
 import {defineComponent, PropType} from "vue"
-import {Album} from "@/store/modules/album.types"
 
 export default defineComponent({
     props: {
         albums: {
-            type: Object as PropType<Array<Album>>,
+            type: Object as PropType<Album[]>,
             required: false,
         }
     },

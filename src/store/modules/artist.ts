@@ -1,4 +1,4 @@
-import {Artist, ArtistState, NestedArtists} from "@/store/modules/artist.types";
+import {Artist, ArtistState, NestedArtists} from "@/store/modules/artist.types"
 
 export default {
     namespaced: true,
@@ -12,7 +12,7 @@ export default {
     },
 
     mutations: {
-        SET_ARTIST(state: ArtistState, payload: Artist|Array<Artist>): void {
+        SET_ARTIST(state: ArtistState, payload: Artist|Artist[]): void {
             if (Array.isArray(payload)) {
                 payload.forEach(artist => {
                     const id = `artist.${artist.id}`

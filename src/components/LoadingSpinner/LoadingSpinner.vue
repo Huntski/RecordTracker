@@ -1,6 +1,7 @@
 <template>
     <SpinnerIcon class="spinner" />
 </template>
+
 <script>
 import {SpinnerIcon} from "@/components/@icons"
 
@@ -15,12 +16,8 @@ export default {
 }
 
 @keyframes spin {
-    from {
-        rotate: 0deg;
-    }
-
     to {
-        rotate: 360deg;
+        transform: rotate(360deg);
     }
 }
 </style>

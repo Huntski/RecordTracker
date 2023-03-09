@@ -1,16 +1,15 @@
 module.exports = {
-  purge: [],
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    screens: {
-      '2xl': '1536px',
-    },
-
     extend: {
+      screens: {
+        '2xl': '1536px',
+      },
+
       colors: {
         'primary-background-color': '#1A1A1A',
 
@@ -43,6 +42,11 @@ module.exports = {
           '500': '#5e5e5e',
           '600': '#525252',
           '700': '#3a3a3a',
+        },
+
+        'section': {
+          'start': '#303030',
+          'end': '#2d2d2d',
         },
 
         "overlay": "#00000090"

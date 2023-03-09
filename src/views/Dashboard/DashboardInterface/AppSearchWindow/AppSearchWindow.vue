@@ -1,40 +1,41 @@
 <template>
-    <div
-        class="absolute z-20 top-0 left-0 right-0 w-full h-full flex flex-col items-center"
-        :class="{'hidden' : !open}"
-    >
+    <PopupModal :class="{'hidden' : !open}">
         <BackgroundOverlay @click="closeWindow" />
 
-        <div class="search-base-field relative max-w-3xl z-20 w-full mt-20" :class="{'active' : showResults || noResultsReturned}">
-            <BaseField>
+        <div class="relative max-w-3xl z-20 w-full mt-20">
+            <BaseField class="mx-5">
                 <SearchBar v-model:value="searchQuery" @search="handleSearchEvent" :loading="loading" />
 
                 <div class="bottom-line"></div>
 
-                <div class="grid gap-5 py-5">
-                    <div class="flex items-center gap-3 px-5">
-                        <SearchFilterButton :active="selectedFilter === 'albums'" @click="setFilter('albums')">
-                            <NoteIcon />
-                            <span>Albums</span>
-                        </SearchFilterButton>
+                <div class="flex items-center gap-3 px-5 py-5">
+                    <SearchFilterButton :active="selectedFilter === 'albums'" @click="setFilter('albums')">
+                        <NoteIcon />
+                        <span>Albums</span>
+                    </SearchFilterButton>
 
-                        <SearchFilterButton :active="selectedFilter === 'artists'" @click="setFilter('artists')">
-                            <ArtistIcon />
-                            <span>Artists</span>
-                        </SearchFilterButton>
-                    </div>
+                    <SearchFilterButton :active="selectedFilter === 'artists'" @click="setFilter('artists')">
+                        <ArtistIcon />
+                        <span>Artists</span>
+                    </SearchFilterButton>
+                </div>
 
-                    <div class="base-scrollbar search-results mx-2 overflow-auto px-3" v-show="showResults">
+                <div
+                    class="search-results overflow-y-scroll base-scrollbar"
+                    :class="{'active' : showResults || noResultsReturned}"
+                    ref="searchResults"
+                >
+                    <div class="mx-2 px-3 pb-5" v-show="showResults" ref="searchResultItems">
                         <ArtistSearchResults @close="closeWindow" class="mb-5" :artists="searchResults.artists" v-show="searchResults.artists.length" />
 
                         <AlbumSearchResults @close="closeWindow" :albums="searchResults.albums" />
-                    </div>
 
-                    <div v-if="noResultsReturned" class="px-6 text-sm font-bold text-gray-200">No results matched your search.</div>
+                        <div v-if="noResultsReturned" class="px-6 font-bold text-gray-200">No results matched your search.</div>
+                    </div>
                 </div>
             </BaseField>
         </div>
-    </div>
+    </PopupModal>
 </template>
 
 <script>
@@ -46,6 +47,7 @@ import {globalSearchRequest} from "@/services/searchService"
 import {NoteIcon, ArtistIcon} from "@/components/@icons"
 import SearchFilterButton from "@/views/Dashboard/DashboardInterface/AppSearchWindow/SearchFilterButton"
 import BackgroundOverlay from "@/components/BackgroundOverlay"
+import PopupModal from "@/components/PopupModal/PopupModal"
 
 export default {
     data() {
@@ -56,19 +58,15 @@ export default {
             },
 
             selectedFilter: '',
-
             searchQuery: '',
-
             open: false,
-
             loading: false,
-
             typingInterval: null,
         }
     },
 
     watch: {
-        selectedFilter(newFilter) {
+        selectedFilter() {
             this.handleSearchEvent()
         }
     },
@@ -92,6 +90,25 @@ export default {
             this.selectedFilter = filter
         },
 
+        resetHeight() {
+            this.$refs.searchResults.style.minHeight = `0`
+            this.$refs.searchResults.style.maxHeight = `0`
+        },
+
+        updateHeight() {
+            const rect = this.$refs.searchResultItems.getBoundingClientRect()
+
+            if (rect.height > 500) {
+                this.$refs.searchResults.style.minHeight = `500px`
+                this.$refs.searchResults.style.maxHeight = `500px`
+            }
+
+            if (rect.height < 500) {
+                this.$refs.searchResults.style.maxHeight = `${rect.height}px`
+                this.$refs.searchResults.style.minHeight = `${rect.height}px`
+            }
+        },
+
         handleSearchEvent() {
             this.loading = true
 
@@ -113,15 +130,21 @@ export default {
                 if (!this.searchQuery) {
                     this.searchResults.albums = []
                     this.searchResults.artists = []
-                } else {
-                    const results = await globalSearchRequest(this.searchQuery)
 
-                    this.searchResults.artists = results.artists
-                    this.searchResults.albums = results.albums
+                    this.resetHeight()
+                } else {
+                    await globalSearchRequest(this.searchQuery).then(results => {
+                        this.searchResults.artists = results.artists
+                        this.searchResults.albums = results.albums
+
+                        this.$nextTick(this.updateHeight)
+                    })
                 }
             } catch (e) {
                 this.searchResults.albums = []
                 this.searchResults.artists = []
+
+                this.resetHeight()
             }
         },
 
@@ -137,6 +160,8 @@ export default {
         resetSearchResults() {
             this.searchResults.albums = []
             this.searchResults.artists = []
+
+            this.resetHeight()
         },
 
         resetAllFields() {
@@ -154,8 +179,6 @@ export default {
         handleKeyPressEvent(e) {
             if (e.key === 'Escape') {
                 this.open = false
-
-                document.querySelector('body').removeEventListener('keydown', this.handleKeyPressEvent)
             }
         }
     },
@@ -164,23 +187,14 @@ export default {
         document.addEventListener('keydown', this.handleKeyPressEvent)
     },
 
-    components: {ArtistIcon, SearchBar, BaseField, AlbumSearchResults, ArtistSearchResults, NoteIcon, SearchFilterButton, BackgroundOverlay}
+    components: {PopupModal, ArtistIcon, SearchBar, BaseField, AlbumSearchResults, ArtistSearchResults, NoteIcon, SearchFilterButton, BackgroundOverlay}
 }
 </script>
 
-<style>
-.search-base-field {
-    max-height: 200px;
-    overflow: hidden;
-    transition: max-height 300ms ease-out;
-}
-
-.search-base-field.active {
-    max-height: 80vh;
-}
-
+<style scoped>
 .search-results {
-    max-height: 50vh;
+    max-height: 0;
+    transition: max-height 100ms ease-out, min-height 100ms ease-out;
 }
 
 .bottom-line {

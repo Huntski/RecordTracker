@@ -1,12 +1,18 @@
 @import './fonts.css';
+@import './transition.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .base-scrollbar::-webkit-scrollbar {
+    opacity: 0;
     width: 5px;
     padding-right: 3px;
+}
+
+.base-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: rgba(87, 87, 87);
 }
 
 .base-scrollbar::-webkit-scrollbar-track {
@@ -14,7 +20,7 @@
 }
 
 .base-scrollbar::-webkit-scrollbar-thumb {
-    background: #575757;
+    background: rgba(87, 87, 87, 0);
     border-radius: 20px;
 }
 
@@ -26,4 +32,12 @@
 
 .scrollbar-hidden::-webkit-scrollbar {
     display: none;
+}
+
+.pointer-events-parent-none {
+    pointer-events: none;
+}
+
+.pointer-events-parent-none * {
+    pointer-events: auto;
 }

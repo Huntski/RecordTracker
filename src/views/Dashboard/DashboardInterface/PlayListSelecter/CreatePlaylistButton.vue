@@ -1,10 +1,10 @@
 <template>
-    <button class="text-xs flex items-center justify-between gap-3 px-3 pt-2 py-1.5 rounded opacity-70 hover:opacity-100">
-        <PlusIcon class="w-2.5" />
+    <button class="relative flex items-center gap-5 text-sm bg-close-button-bg px-5 py-3 opacity-70 hover:opacity-100">
+        <PlusIcon class="w-4" />
 
         <span>New Playlist</span>
 
-        <div class="w-2.5" />
+        <div class="w-4" />
     </button>
 </template>
 
@@ -15,3 +15,15 @@ export default {
     components: {PlusIcon}
 }
 </script>
+
+<style scoped>
+button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 3px 20px #00000025 inset;
+}
+</style>

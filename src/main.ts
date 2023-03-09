@@ -8,4 +8,7 @@ import axios from 'axios'
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App)
+    .use(store)
+    .use(router)
+    .mount('#app')

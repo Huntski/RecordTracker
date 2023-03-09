@@ -1,6 +1,6 @@
 <template>
     <button
-        class="group outline-none base-button relative flex items-center text-white bg-primary-button-bg p-1.5 rounded-2xl border-primary-button-border border-8 active:border-green-400 group"
+        class="group outline-none base-button relative flex items-center text-white bg-primary-button-bg p-1.5 rounded-2xl border-primary-button-border border-8 group"
         :class="{'rounded-full' : rounded}"
     >
         <div class="content rounded relative w-full transform group-active:scale-105" :class="{'rounded-full' : rounded}">
