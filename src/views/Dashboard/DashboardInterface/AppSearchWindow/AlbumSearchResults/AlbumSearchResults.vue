@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts">
-import store from "@/store"
 import {AlbumId, Album} from "@/store/modules/album.types"
 import {defineComponent, PropType} from "vue"
 
@@ -22,7 +21,7 @@ export default defineComponent({
 
     methods: {
         openAlbum(id: AlbumId): void {
-            store.commit('album/SET_REQUESTED_ALBUM_OVERVIEW', id)
+            this.$router.push({name: 'AlbumDetailPage', params: {id: id}})
             this.$emit('close')
         }
     }

@@ -44,7 +44,7 @@ export default {
         },
 
         openAlbum(id){
-            store.commit('album/SET_REQUESTED_ALBUM_OVERVIEW', id)
+            // TODO: Open album when clicked on bubble.
         },
 
         createAlbumElementsWithRowsAndColumns(albums) {

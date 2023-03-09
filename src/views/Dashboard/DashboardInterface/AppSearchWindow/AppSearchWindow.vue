@@ -1,5 +1,5 @@
 <template>
-    <PopupModal :class="{'hidden' : !open}">
+    <PopupModal>
         <BackgroundOverlay @click="closeWindow" />
 
         <div class="relative max-w-3xl z-20 w-full mt-20">
@@ -22,7 +22,7 @@
 
                 <div
                     class="search-results overflow-y-scroll base-scrollbar"
-                    :class="{'active' : showResults || noResultsReturned}"
+                    :class="{'active' : showResults}"
                     ref="searchResults"
                 >
                     <div class="mx-2 px-3 pb-5" v-show="showResults" ref="searchResultItems">
@@ -30,7 +30,7 @@
 
                         <AlbumSearchResults @close="closeWindow" :albums="searchResults.albums" />
 
-                        <div v-if="noResultsReturned" class="px-6 font-bold text-gray-200">No results matched your search.</div>
+                        <div v-show="noResultsReturned" class="px-6 font-bold text-gray-200">No results matched your search.</div>
                     </div>
                 </div>
             </BaseField>
@@ -59,7 +59,6 @@ export default {
 
             selectedFilter: '',
             searchQuery: '',
-            open: false,
             loading: false,
             typingInterval: null,
         }
@@ -77,7 +76,7 @@ export default {
         },
 
         noResultsReturned() {
-            return !this.searchResults.artists.length && !this.searchResults.albums.length && this.searchQuery.length && !this.loading
+            return !this.searchResults.artists.length && !this.searchResults.albums.length && !this.loading
         }
     },
 
@@ -148,37 +147,13 @@ export default {
             }
         },
 
-        toggleWindow() {
-            this.open = !this.open
-        },
-
-        openWindow() {
-            this.resetAllFields()
-            this.open = true
-        },
-
-        resetSearchResults() {
-            this.searchResults.albums = []
-            this.searchResults.artists = []
-
-            this.resetHeight()
-        },
-
-        resetAllFields() {
-            this.open = false
-            this.searchQuery = ''
-            this.selectedFilter = ''
-            this.resetSearchResults()
-        },
-
         closeWindow() {
-            this.open = false
-            this.resetAllFields()
+            this.$router.push({name: 'Dashboard'})
         },
 
         handleKeyPressEvent(e) {
             if (e.key === 'Escape') {
-                this.open = false
+                this.$router.push({name: 'Dashboard'})
             }
         }
     },

@@ -9,6 +9,14 @@
                 <div class="w-4" />
             </button>
 
+            <button class="flex items-center gap-5 px-5 text-sm text-gray-200 hover:text-white py-3 rounded-t" @click="selectFullCollection">
+                <FireIcon class="w-4" />
+
+                <span>Recently added</span>
+
+                <div class="w-4" />
+            </button>
+
             <CreatePlaylistButton @click="showCreatePlaylistInput" />
 
             <PlaylistOptions ref="playlistOptions" />
@@ -23,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import {CollectionIcon, SmallArrowIcon} from "@/components/@icons"
+import {CollectionIcon, SmallArrowIcon, FireIcon} from "@/components/@icons"
 import {BaseField} from "@/components/@fields"
 import PlaylistOptions from "@/views/Dashboard/DashboardInterface/PlayListSelecter/PlaylistOptions"
 import CreatePlaylistButton from "@/views/Dashboard/DashboardInterface/PlayListSelecter/CreatePlaylistButton.vue"
@@ -78,15 +86,11 @@ export default defineComponent({
         getPlaylists()
     },
 
-    components: {PlaylistOptions, SmallArrowIcon, CollectionIcon, CreatePlaylistButton, BaseField}
+    components: {FireIcon, PlaylistOptions, SmallArrowIcon, CollectionIcon, CreatePlaylistButton, BaseField}
 })
 </script>
 
 <style scoped>
-* {
-    /*transition: max-height 300ms ease-out;*/
-}
-
 .playlist-actions {
     max-height: 0;
     opacity: 0;

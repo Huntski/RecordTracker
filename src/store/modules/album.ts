@@ -9,10 +9,6 @@ export default {
         getAlbums(state: AlbumState): NestedAlbums {
             return state.albums
         },
-
-        getRequestedAlbumId(state: AlbumState): AlbumId|undefined {
-            return state.requestedAlbumId
-        },
     },
 
     mutations: {
@@ -43,9 +39,5 @@ export default {
                 state.albums[id] = album
             })
         },
-
-        SET_REQUESTED_ALBUM_OVERVIEW(state: AlbumState, albumId: AlbumId|undefined): void {
-            state.requestedAlbumId = albumId
-        }
     },
 }

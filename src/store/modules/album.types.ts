@@ -1,6 +1,6 @@
 import {Genre} from "@/store/modules/genre.types"
 
-export type AlbumId = number
+export type AlbumId = number|string
 
 export interface Album {
     id: number,
@@ -18,5 +18,4 @@ export interface NestedAlbums {
 
 export class AlbumState {
     albums: NestedAlbums = {}
-    requestedAlbumId?: AlbumId = undefined
 }

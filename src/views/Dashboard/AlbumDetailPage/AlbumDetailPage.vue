@@ -43,7 +43,7 @@
                 <TrackList class="mb-10" :tracks="tracks" />
             </div>
 
-            <ArtistsBioSection class="col-span-5 lg:col-span-2" :artists="artists" />
+            <ArtistsBioSection class="relative col-span-5 lg:col-span-2" :artists="artists" />
 
             <footer class="lg:absolute z-0 left-0 bottom-0 text-gray-300 right-0 text-xs p-5 box-border flex justify-between items-center w-full">
                 <button class="flex items-center gap-3 hover:text-white">
@@ -63,7 +63,6 @@ import BackgroundOverlay from "@/components/BackgroundOverlay"
 import {CloseButton} from "@/components/@buttons"
 import {defineComponent} from "vue"
 import {Album, AlbumId} from "@/store/modules/album.types"
-import store from "@/store"
 import {getAlbum, getAlbumArtists, getAlbumTracks} from "@/services/albumService"
 import {Track} from "@/store/modules/track.types"
 import {Artist} from "@/store/modules/artist.types"
@@ -74,7 +73,6 @@ import ArtistsBioSection from "@/views/Dashboard/AlbumDetailPage/ArtistsBioSecti
 import {ShopIcon} from "@/components/@icons"
 
 export class AlbumDetailPageData {
-    open = false
     album?: Album = undefined
     artists: Artist[] = []
     tracks: Track[] = []
@@ -92,15 +90,8 @@ export default defineComponent( {
             this.tracks = await getAlbumTracks(newId)
         },
 
-        openWindow() {
-            console.log('open window overview')
-
-            this.open = true
-        },
-
         closeWindow() {
-            store.commit('album/SET_REQUESTED_ALBUM_OVERVIEW', null)
-            this.open = false
+            this.$router.push({name: 'Dashboard'})
         },
 
         handleKeyPressEvent(e: KeyboardEvent) {
@@ -113,7 +104,7 @@ export default defineComponent( {
     },
 
     mounted() {
-        this.getAlbumData(store.getters['album/getRequestedAlbumId'])
+        this.getAlbumData(this.$route.params.id as string)
     },
 
     created() {
