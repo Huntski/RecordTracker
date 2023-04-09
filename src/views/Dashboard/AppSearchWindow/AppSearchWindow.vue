@@ -9,12 +9,12 @@
                 <div class="bottom-line"></div>
 
                 <div class="flex items-center gap-3 px-5 py-5">
-                    <SearchFilterButton :active="selectedFilter === 'albums'" @click="setFilter('albums')">
+                    <SearchFilterButton v-model:selectedFilter="selectedFilter" filter="albums">
                         <NoteIcon />
                         <span>Albums</span>
                     </SearchFilterButton>
 
-                    <SearchFilterButton :active="selectedFilter === 'artists'" @click="setFilter('artists')">
+                    <SearchFilterButton v-model:selectedFilter="selectedFilter" filter="artists">
                         <ArtistIcon />
                         <span>Artists</span>
                     </SearchFilterButton>
@@ -26,9 +26,19 @@
                     ref="searchResults"
                 >
                     <div class="mx-2 px-3 pb-5" v-show="showResults" ref="searchResultItems">
-                        <ArtistSearchResults @close="closeWindow" class="mb-5" :artists="searchResults.artists" v-show="searchResults.artists.length" />
+                        <ArtistSearchResults
+                            @close="closeWindow"
+                            class="mb-5"
+                            :artists="searchResults.artists"
+                            v-show="searchResults.artists.length"
+                            :fitler="selectedFilter"
+                        />
 
-                        <AlbumSearchResults @close="closeWindow" :albums="searchResults.albums" />
+                        <AlbumSearchResults
+                            @close="closeWindow"
+                            :albums="searchResults.albums"
+                            :fitler="selectedFilter"
+                        />
 
                         <div v-show="noResultsReturned" class="px-6 font-bold text-gray-200">No results matched your search.</div>
                     </div>
@@ -39,15 +49,15 @@
 </template>
 
 <script>
-import SearchBar from "@/views/Dashboard/DashboardInterface/AppSearchWindow/SearchBar"
+import SearchBar from "@/views/Dashboard/AppSearchWindow/SearchBar"
 import {BaseField} from "@/components/@fields"
-import AlbumSearchResults from "@/views/Dashboard/DashboardInterface/AppSearchWindow/AlbumSearchResults"
-import ArtistSearchResults from "@/views/Dashboard/DashboardInterface/AppSearchWindow/ArtistSearchResults"
-import {globalSearchRequest} from "@/services/searchService"
+import AlbumSearchResults from "@/views/Dashboard/AppSearchWindow/AlbumSearchResults"
+import ArtistSearchResults from "@/views/Dashboard/AppSearchWindow/ArtistSearchResults"
 import {NoteIcon, ArtistIcon} from "@/components/@icons"
-import SearchFilterButton from "@/views/Dashboard/DashboardInterface/AppSearchWindow/SearchFilterButton"
+import SearchFilterButton from "@/views/Dashboard/AppSearchWindow/SearchFilterButton"
 import BackgroundOverlay from "@/components/BackgroundOverlay"
-import PopupModal from "@/components/PopupModal/PopupModal"
+import PopupModal from "@/components/PopupModal/PopupModal.vue"
+import {globalSearchRequest} from "@/services/searchService"
 
 export default {
     data() {
@@ -57,7 +67,7 @@ export default {
                 albums: []
             },
 
-            selectedFilter: '',
+            selectedFilter: null,
             searchQuery: '',
             loading: false,
             typingInterval: null,

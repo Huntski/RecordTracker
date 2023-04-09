@@ -11,6 +11,7 @@
                 v-model="playlistName"
                 @input="resetErrors"
                 :class="{'error' : errorMessage}"
+                maxlength="30"
             >
             <span class="text-xs pl-4 text-orange-400" v-show="errorMessage">{{errorMessage[0]}}</span>
         </li>

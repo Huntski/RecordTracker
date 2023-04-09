@@ -1,23 +1,19 @@
 <template>
     <BaseField @focusout="handleFocusOut" tabindex="0" ref="playListSelector">
         <div class="playlist-actions flex flex-col overflow-hidden transition" :class="{'active': open}">
-            <button class="flex items-center gap-5 px-5 text-sm py-3 rounded-t" :class="{'text-dominant': !selectedPlaylist}" @click="selectFullCollection">
+            <DefaultMenuOption @click="selectFullCollection" :active="selectedPlaylist === 'collection'">
                 <CollectionIcon class="w-4" />
 
                 <span>Your Collection</span>
+            </DefaultMenuOption>
 
-                <div class="w-4" />
-            </button>
-
-            <button class="flex items-center gap-5 px-5 text-sm text-gray-200 hover:text-white py-3 rounded-t" @click="selectFullCollection">
+            <DefaultMenuOption>
                 <FireIcon class="w-4" />
 
                 <span>Recently added</span>
+            </DefaultMenuOption>
 
-                <div class="w-4" />
-            </button>
-
-            <CreatePlaylistButton @click="showCreatePlaylistInput" />
+            <CreatePlaylistButton @click="openPlaylistInput" />
 
             <PlaylistOptions ref="playlistOptions" />
         </div>
@@ -31,12 +27,13 @@
 </template>
 
 <script lang="ts">
-import {CollectionIcon, SmallArrowIcon, FireIcon} from "@/components/@icons"
+import {CollectionIcon, FireIcon, SmallArrowIcon} from "@/components/@icons"
 import {BaseField} from "@/components/@fields"
 import PlaylistOptions from "@/views/Dashboard/DashboardInterface/PlayListSelecter/PlaylistOptions"
 import CreatePlaylistButton from "@/views/Dashboard/DashboardInterface/PlayListSelecter/CreatePlaylistButton.vue"
+import DefaultMenuOption from "@/views/Dashboard/DashboardInterface/PlayListSelecter/PlaylistOptions/DefaultMenuOption"
 import {defineComponent} from "vue"
-import {Playlist} from "@/store/modules/playlist.types"
+import {SelectedPlaylist} from "@/store/modules/playlist.types"
 import {getPlaylists} from "@/services/playlistService"
 import store from "@/store"
 import {getAlbumCollection} from "@/services/albumService"
@@ -49,24 +46,28 @@ export default defineComponent({
     },
 
     computed: {
-        selectedPlaylist(): Playlist {
+        selectedPlaylist(): SelectedPlaylist {
             return store.getters['playlist/getSelectedPlaylist']
         },
     },
 
     methods: {
         selectFullCollection() {
-            if (this.selectedPlaylist) {
-                store.commit('playlist/SET_SELECTED_PLAYLIST', null)
+            store.commit('playlist/SET_SELECTED_PLAYLIST', "collection")
 
-                getAlbumCollection()
-            }
+            getAlbumCollection()
         },
 
-        showCreatePlaylistInput() {
+        openPlaylistInput() {
             const playlistOptions = this.$refs.playlistOptions as Record<any, any>
 
             playlistOptions.showInput()
+        },
+
+        closePlaylistInput() {
+            const playlistOptions = this.$refs.playlistOptions as Record<any, any>
+
+            playlistOptions.closeInput()
         },
 
         handleFocusOut(e: FocusEvent) {
@@ -82,11 +83,19 @@ export default defineComponent({
         }
     },
 
+    mounted() {
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && this.open) {
+                this.open = false
+            }
+        })
+    },
+
     created() {
         getPlaylists()
     },
 
-    components: {FireIcon, PlaylistOptions, SmallArrowIcon, CollectionIcon, CreatePlaylistButton, BaseField}
+    components: {FireIcon, PlaylistOptions, SmallArrowIcon, CollectionIcon, CreatePlaylistButton, BaseField, DefaultMenuOption}
 })
 </script>
 

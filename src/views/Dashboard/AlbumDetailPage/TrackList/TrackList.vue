@@ -2,7 +2,7 @@
     <div>
         <h2 class="px-5 text-xl pb-5">TrackList</h2>
 
-        <div class="bg-gradient-to-b bg-section-start bg-section-end rounded text-xs overflow-y-scroll base-scrollbar shadow border border-black xl:max-h-72 last:border-none">
+        <div class="bg-gradient-to-b from-section-start to-section-end rounded text-xs base-scrollbar shadow border border-black last:border-none">
             <div v-for="(track, index) in tracks"
                  :key="track.id"
                  class="track flex items-center ml-5 py-3 border-b border-solid border-gray-700"

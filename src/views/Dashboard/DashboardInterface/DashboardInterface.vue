@@ -1,10 +1,8 @@
 <template>
-    <div class="absolute top-0 left-0 flex items-end w-full h-full pointer-events-none pointer-events-parent-none">
-        <div id="bottom-actions" class="p-5 flex justify-between items-end w-full">
-            <PlayListSelecter />
+    <div class="absolute top-0 left-0 flex justify-between items-end p-5 w-full h-full pointer-events-none pointer-events-parent-none">
+        <PlayListSelecter />
 
-            <SearchButton />
-        </div>
+        <SearchButton  />
     </div>
 </template>
 
@@ -20,6 +18,7 @@ export default defineComponent({
 
 <style>
 #bottom-actions:before {
+    pointer-events: none;
     content: "";
     position: absolute;
     left: 0;

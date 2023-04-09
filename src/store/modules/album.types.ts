@@ -17,5 +17,5 @@ export interface NestedAlbums {
 }
 
 export class AlbumState {
-    albums: NestedAlbums = {}
+    albums: Album[] = []
 }

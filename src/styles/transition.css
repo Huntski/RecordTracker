@@ -1,17 +1,56 @@
 .list-move, /* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
-    transition: all 200ms ease-out;
+    transition: transform 300ms ease-out;
 }
 
 .list-enter-from,
 .list-leave-to {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-20px);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving
    animations can be calculated correctly. */
 .list-leave-active {
     position: absolute;
+}
+
+/**
+    Clip Animation.
+ */
+
+.animate--fade {
+    animation: fadeIn 300ms ease-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.animate--reveal {
+    clip-path: polygon(0% 0%, 200% 0%, 0% 220%);
+    animation-fill-mode: backwards;
+    animation: clipPathReveal 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes clipPathReveal {
+    0%, 30% {
+        clip-path: polygon(0% 0%, 0% 0%, 0% 0%);
+        transform: scale(0.90);
+    }
+
+    70% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

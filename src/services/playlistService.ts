@@ -1,4 +1,4 @@
-import axios, {Axios, AxiosError, AxiosResponse} from "axios"
+import axios, {AxiosError, AxiosResponse} from "axios"
 import store from "@/store"
 import {Playlist} from "@/store/modules/playlist.types"
 import {Album} from "@/store/modules/album.types"
@@ -55,7 +55,7 @@ export async function createPlaylist(name: string): Promise<AxiosResponse|ApiCre
             name: name
         })
 
-        // store.commit('playlist/SET_PLAYLIST', result.data.data)
+        store.commit('playlist/SET_PLAYLIST', result.data.data)
 
         return result
     } catch (error) {

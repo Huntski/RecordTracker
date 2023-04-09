@@ -1,7 +1,7 @@
 <template>
-    <div class="artist-search-results rounded-lg p-3 border border-black">
+    <div class="rounded-lg p-3 border border-black" :class="{ 'artist-search-results' : filter === ''}">
         <div class="grid grid-cols-5 gap-3" v-if="artists.length > 1">
-            <div v-for="artist in artists" :key="artist.id">
+            <router-link :to="{name: 'ArtistDetailPage', params: {id: artist.id}}" tag="div" v-for="artist in artists" :key="artist.id">
                 <div class="artist-card artist-card-overlay relative rounded bg-gray-500 overflow-hidden flex flex-col justify-end">
                     <img v-if="artist.image_url" :src="artist.image_url" :alt="artist.title" class="absolute top-0 left-0 z-0 w-full h-full object-cover">
 
@@ -9,10 +9,10 @@
                         <h2 class="font-bold text-xs">{{ artist.name }}</h2>
                     </div>
                 </div>
-            </div>
+            </router-link>
         </div>
 
-        <div v-for="artist in artists" :key="artist.id" v-else class="flex items-center">
+        <router-link :to="{name: 'ArtistDetailPage', params: {id: artist.id}}" tag="div" v-for="artist in artists" :key="artist.id" v-else class="flex items-center">
             <div class="artist-card rounded-full bg-gray-500 overflow-hidden w-40">
                 <img v-if="artist.image_url" :src="artist.image_url" :alt="artist.title" class="object-cover w-full h-full">
             </div>
@@ -25,6 +25,18 @@
 
                 <p class="text-xs italic text-ellipsis text-gray-200 font-light" v-show="artist.bio">{{ artist.bio.substring(0,170) }}...</p>
             </div>
+        </router-link>
+
+        <div class="grid grid-cols-5 gap-3" v-if="filter === 'artists'">
+            <router-link :to="{name: 'ArtistDetailPage', params: {id: artist.id}}" tag="div" v-for="artist in artists" :key="artist.id">
+                <div class="artist-card artist-card-overlay relative rounded bg-gray-500 overflow-hidden flex flex-col justify-end">
+                    <img v-if="artist.image_url" :src="artist.image_url" :alt="artist.title" class="absolute top-0 left-0 z-0 w-full h-full object-cover">
+
+                    <div class="relative z-10 p-2">
+                        <h2 class="font-bold text-xs">{{ artist.name }}</h2>
+                    </div>
+                </div>
+            </router-link>
         </div>
     </div>
 </template>
@@ -35,6 +47,11 @@ export default {
         artists: {
             type: Object,
             required: false,
+        },
+
+        filter: {
+            type: String,
+            required: false
         }
     },
 }
@@ -56,5 +73,10 @@ export default {
 
 .artist-search-results {
     background: #1F1F1F;
+    cursor: pointer;
+}
+
+.artist-search-results:hover {
+    background: #1a1a1a;
 }
 </style>

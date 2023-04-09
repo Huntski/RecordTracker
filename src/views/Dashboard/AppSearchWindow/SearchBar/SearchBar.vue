@@ -32,9 +32,11 @@ export default {
     },
 
     mounted() {
-        const createInput = this.$refs.createInput
+        const searchbar = this.$refs.searchbar
 
-        // this.$nextTick(() => createInput.focus())
+        setTimeout(() => {
+            searchbar.focus()
+        }, 10)
     },
 
     components: {LoadingSpinner, SearchIcon}

@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-gradient-to-b from-[#1E1E1E] to-[#232323] p-20 max-h-full lg:overflow-hidden lg:overflow-y-scroll base-scrollbar">
-        <div v-for="artist in artists" :key="artist.id">
+    <div class="p-20 max-h-full xl:overflow-hidden xl:overflow-y-scroll base-scrollbar">
+        <div :key="artist.id">
             <div class="flex items-center gap-5 mb-10">
                 <div class="w-32 h-32 aspect-square rounded-lg overflow-hidden">
                     <img :src="artist.image_url" :alt="artist.name" class="w-full h-full object-cover">
@@ -23,8 +23,8 @@ import {Artist} from "@/store/modules/artist.types"
 
 export default defineComponent({
     props: {
-        artists: {
-            type: Object as PropType<Artist[]>,
+        artist: {
+            type: Object as PropType<Artist>,
             required: true
         }
     },

@@ -1,4 +1,5 @@
 export type PlaylistId = number
+export type SelectedPlaylist = PlaylistId | 'collection'
 
 export interface Playlist {
     id: PlaylistId,
@@ -12,5 +13,5 @@ export interface NestedPlaylists {
 
 export class PlaylistState {
     playlists: NestedPlaylists = {}
-    selectedPlaylist: Playlist | null = null
+    selectedPlaylist: SelectedPlaylist = 'collection'
 }

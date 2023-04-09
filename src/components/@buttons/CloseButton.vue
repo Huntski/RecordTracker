@@ -4,10 +4,6 @@
     </button>
 </template>
 
-<script>
+<script setup>
 import {CrossIcon} from "@/components/@icons"
-
-export default {
-    components: {CrossIcon}
-}
 </script>

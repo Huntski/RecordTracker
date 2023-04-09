@@ -1,4 +1,4 @@
-import {NestedPlaylists, Playlist, PlaylistState} from "@/store/modules/playlist.types"
+import {NestedPlaylists, Playlist, PlaylistState, SelectedPlaylist} from "@/store/modules/playlist.types"
 
 export default {
     namespaced: true,
@@ -10,7 +10,7 @@ export default {
             return state.playlists
         },
 
-        getSelectedPlaylist(state: PlaylistState): Playlist|null {
+        getSelectedPlaylist(state: PlaylistState): SelectedPlaylist {
             return state.selectedPlaylist
         }
     },
@@ -28,7 +28,7 @@ export default {
             state.playlists[`playlist.${payload.id}`] = payload
         },
 
-        SET_SELECTED_PLAYLIST(state: PlaylistState, payload: Playlist|null): void {
+        SET_SELECTED_PLAYLIST(state: PlaylistState, payload: SelectedPlaylist): void {
             state.selectedPlaylist = payload
         }
     },

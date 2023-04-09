@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Dashboard from '../views/Dashboard'
 import AlbumDetailPage from "@/views/Dashboard/AlbumDetailPage"
-import AppSearchWindow from "@/views/Dashboard/DashboardInterface/AppSearchWindow"
+import ArtistDetailPage from "@/views/Dashboard/ArtistDetailPage"
+import AppSearchWindow from "@/views/Dashboard/AppSearchWindow"
 
 const routes: RouteRecordRaw[] = [
   {
@@ -13,6 +14,11 @@ const routes: RouteRecordRaw[] = [
         path: '/album/:id',
         name: 'AlbumDetailPage',
         component: AlbumDetailPage,
+      },
+      {
+        path: '/artist/:id',
+        name: 'ArtistDetailPage',
+        component: ArtistDetailPage,
       },
       {
         path: '/search',

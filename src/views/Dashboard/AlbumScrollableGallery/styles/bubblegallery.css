@@ -4,14 +4,13 @@ html, body {
 }
 
 :root {
-    --gallery-gap: 1vh;
-    --bubble-width: 25vh;
+    --gallery-gap: 0;
+    --bubble-width: 33vh;
 }
 
 .move-container {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
 }
 
 #gallery {
@@ -25,11 +24,8 @@ html, body {
     align-items: center;
     justify-content: center;
     border-radius: 30px;
-    gap: var(--gallery-gap);
-}
-
-#gallery:active {
-    cursor: grabbing;
+    gap: -20px;
+    transition: transform 300ms ease-out;
 }
 
 .row {
@@ -38,7 +34,9 @@ html, body {
 }
 
 .row:nth-child(odd) {
-    margin-left: calc(var(--bubble-width) + (var(--gallery-gap) / 2));
+    margin-top: calc(var(--bubble-width) * -0.1);
+    margin-bottom: calc(var(--bubble-width) * -0.1);
+    margin-left: calc(var(--bubble-width));
 }
 
 .bubble {
@@ -47,12 +45,22 @@ html, body {
     height: var(--bubble-width);
     aspect-ratio: 1 / 1;
     border-radius: 50%;
-    background-color: #575757;
-    background-size: cover;
-    background-position: center;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    opacity: 0;
+    background: #3C3C3C;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 300ms ease;
+    /*animation: bubbleFadeIn 300ms ease-out;*/
+}
+
+.bubble img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
 }
 
 /*

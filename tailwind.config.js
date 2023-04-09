@@ -3,7 +3,7 @@ module.exports = {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
-  darkMode: false, // or 'media' or 'class'
+  media: false, // or 'media' or 'class'
   theme: {
     extend: {
       screens: {
@@ -42,11 +42,15 @@ module.exports = {
           '500': '#5e5e5e',
           '600': '#525252',
           '700': '#3a3a3a',
+          '800': '#262626',
+          '900': '#181818',
         },
+
+        'tag': '#0E2061',
 
         'section': {
           'start': '#303030',
-          'end': '#2d2d2d',
+          'end': '#272727',
         },
 
         "overlay": "#00000090"
