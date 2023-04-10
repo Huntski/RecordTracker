@@ -29,16 +29,7 @@
                 </div>
             </div>
 
-            <footer class="sticky bottom-0 z-10 bg-[#222222] text-gray-300 right-0 text-xs p-5 box-border flex justify-between items-center w-full">
-                <button class="flex items-center gap-3 hover:text-white">
-                    <ShopIcon class="w-5" />
-                    <span>No.1 Hotwax Records</span>
-                </button>
-
-                <button class="flex items-center gap-3 hover:text-white">
-                    <span>BOUGHT BY <strong>Bamspeem</strong></span>
-                </button>
-            </footer>
+            <AlbumDetailFooter />
         </div>
     </div>
 </template>
@@ -53,9 +44,9 @@ import {Artist} from "@/store/modules/artist.types"
 import loadingSpinner from "@/components/LoadingSpinner"
 import TrackList from "@/views/Dashboard/AlbumDetailPage/TrackList"
 import ArtistLinks from "@/views/Dashboard/AlbumDetailPage/ArtistLinks"
-import {ShopIcon} from "@/components/@icons"
 import MetaData from "@/views/Dashboard/AlbumDetailPage/MetaData"
 import AlbumDetailHeader from "@/views/Dashboard/AlbumDetailPage/AlbumDetailHeader"
+import AlbumDetailFooter from "@/views/Dashboard/AlbumDetailPage/AlbumDetailFooter"
 
 export class AlbumDetailPageData {
     album?: Album = undefined
@@ -93,7 +84,7 @@ export default defineComponent( {
         document.addEventListener('keydown', this.handleKeyPressEvent)
     },
 
-    components: {ShopIcon, BackgroundOverlay, loadingSpinner, TrackList, ArtistLinks, AlbumDetailHeader, MetaData}
+    components: {AlbumDetailFooter, BackgroundOverlay, loadingSpinner, TrackList, ArtistLinks, AlbumDetailHeader, MetaData}
 })
 </script>
 

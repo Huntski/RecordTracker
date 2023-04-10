@@ -1,13 +1,13 @@
 <template>
-    <div class="relative py-10">
+    <div class="relative pt-10 pb-20 hide-mobile">
         <h1 class="text-3xl font-major mb-5 opacity-90"><strong>OWNED ALBUMS</strong> &#x2022; {{ albums.length }}</h1>
 
-        <div class="grid grid-cols-4 gap-4 w-full">
+        <TransitionGroup tag="div" name="list" class="grid grid-cols-4 gap-4 w-full">
             <div v-for="album in albums" :key="album.id" @click="openAlbum(album.id)" class="relative rounded overflow-hidden cursor-pointer aspect-square">
                 <div class="bg-overlay absolute w-full h-full opacity-50 transition-opacity hover:opacity-0"></div>
                 <img :src="album.cover_url" :alt="album.title" class="w-full h-full object-cover">
             </div>
-        </div>
+        </TransitionGroup>
     </div>
 </template>
 

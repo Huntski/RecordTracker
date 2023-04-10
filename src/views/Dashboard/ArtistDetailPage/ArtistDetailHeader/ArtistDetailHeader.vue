@@ -1,5 +1,5 @@
 <template>
-    <header class="absolute top-0 left-0 right-0 z-10 p-3 w-full flex items-center justify-between box-border">
+    <header class="absolute top-0 left-0 w-full z-10 p-5 w-full flex items-center justify-end box-border">
         <CloseButton @click="closeWindow" />
     </header>
 </template>

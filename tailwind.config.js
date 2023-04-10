@@ -32,8 +32,8 @@ module.exports = {
         },
 
         'close-button': {
-            'bg': '#595959',
-            'bg-hover': '#707070',
+            'bg': '#3b3b3b',
+            'bg-hover': '#333333',
         },
 
         'gray': {
