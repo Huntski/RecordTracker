@@ -178,7 +178,7 @@ export default {
 
 <style scoped>
 .search-results {
-    max-height: 0;
+    max-height: 500px;
     transition: max-height 100ms ease-out, min-height 100ms ease-out;
 }
 

@@ -24,6 +24,7 @@ module.exports = {
         },
 
         'dominant': '#DBFF4A',
+        'dominant-secondary': '#D0FF94',
 
         'filter-button': {
           'active': '#DBFF4A',
@@ -31,8 +32,8 @@ module.exports = {
         },
 
         'close-button': {
-            'bg': '#171717',
-            'bg-hover': '#252525',
+            'bg': '#595959',
+            'bg-hover': '#707070',
         },
 
         'gray': {

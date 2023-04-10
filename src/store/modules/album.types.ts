@@ -9,7 +9,7 @@ export interface Album {
     origin: string,
     comment: string,
     cover_url: Url,
-    genres?: Genre[]
+    genres: Genre[]
 }
 
 export interface NestedAlbums {

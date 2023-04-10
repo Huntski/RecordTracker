@@ -2,34 +2,47 @@
     <div class="absolute top-0 left-0 bottom-0 right-0 m-auto w-full h-full flex justify-center items-center">
         <BackgroundOverlay @click="closeWindow" />
 
-        <div v-if="artist" class="bg-gradient-to-b from-[#1E1E1E] to-[#232323] relative artist-detail-page box-border rounded-xl text-white base-scrollbar overflow-y-scroll overflow-x-hidden xl:overflow-hidden">
-            <CloseButton class="absolute top-0 right-0 m-3 z-20" @click="closeWindow" />
+        <div class="animate--reveal relative bg-gradient-to-br from-gray-800 to-gray-900 relative artist-detail-page box-border rounded-xl text-white base-scrollbar">
+            <ArtistDetailHeader />
 
-            <ArtistsBioSection class="relative w-full" :artist="artist" />
+            <main class="max-w-6xl justify-center items-center w-full mx-auto h-full overflow-y-scroll scrollbar-hidden">
+                <ArtistBio :artist="artist" />
+
+                <OwnedAlbums class="ml-20" />
+            </main>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import BackgroundOverlay from "@/components/BackgroundOverlay"
-import {CloseButton} from "@/components/@buttons"
 import {getArtist} from "@/services/artistService"
 import {useRoute} from "vue-router"
 import router from "@/router"
-import ArtistsBioSection from "@/views/Dashboard/AlbumDetailPage/ArtistsBioSection"
+import ArtistDetailHeader from './ArtistDetailHeader'
+import OwnedAlbums from "@/views/Dashboard/ArtistDetailPage/OwnedAlbums"
+import ArtistBio from "@/views/Dashboard/ArtistDetailPage/ArtistBio"
 
-const route = useRoute()
-
-const artist = await getArtist(Number(route.params.id))
+const artist = await getArtist(Number(useRoute().params.id))
 
 function closeWindow() {
     router.push({name: 'Dashboard'})
 }
+
+function handleKeyPressEvent(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+        closeWindow()
+
+        document.onkeydown = null
+    }
+}
+
+document.addEventListener('keydown', handleKeyPressEvent)
 </script>
 
 <style>
 .artist-detail-page {
     width: 95vw;
-    height: 90vh;
+    height: 85vh;
 }
 </style>

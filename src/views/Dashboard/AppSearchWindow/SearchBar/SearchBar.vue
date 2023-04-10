@@ -3,7 +3,7 @@
         <LoadingSpinner class="w-4" v-if="loading" />
         <SearchIcon class="w-4" v-else />
 
-        <input type="text" :value="value" ref="searchbar" @input="handleInput" class="w-full outline-none rounded py-5" placeholder="Search for songs, albums, tracks...">
+        <input type="text" :value="value" ref="searchbar" @input="handleInput" class="w-full text-lg outline-none rounded py-5" placeholder="Search for songs, albums, tracks...">
     </div>
 </template>
 

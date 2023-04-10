@@ -1,5 +1,5 @@
 <template>
-    <button class="w-7 h-7 rounded bg-close-button-bg hover:bg-close-button-bg-hover p-2.5">
+    <button class="w-8 h-8 p-3 rounded bg-close-button-bg hover:bg-close-button-bg-hover">
         <CrossIcon />
     </button>
 </template>

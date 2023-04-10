@@ -1,19 +1,19 @@
-.list-move, /* apply transition to moving elements */
-.list-enter-active,
-.list-leave-active {
-    transition: transform 300ms ease-out;
+.list-enter-active {
+    transition: all .5s ease;
+    transition-delay: 300ms;
 }
-
-.list-enter-from,
-.list-leave-to {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
 .list-leave-active {
     position: absolute;
+    transition: all 0ms;
+}
+
+.list-enter-from {
+    opacity: 0;
+    transform: translateX(30px);
+}
+.list-leave-to {
+    opacity: 0;
+    transition: all 0ms;
 }
 
 /**

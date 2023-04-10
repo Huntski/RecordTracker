@@ -1,31 +1,47 @@
 <template>
-    <div>
-        <router-link :to="{name: 'ArtistDetailPage', params: {id: firstArtist.id}}" v-if="artists.length === 1" class="flex items-center cursor-pointer gap-3 p-1 hover:bg-tag hover:text-dominant rounded-full">
-            <div class="w-6 h-6 rounded-full overflow-hidden bg-green-50">
-                <img v-if="firstArtist.image_url" :src="firstArtist.image_url" :alt="firstArtist.name" class="w-full h-full object-cover">
-            </div>
+    <div class="border border-gray-700 rounded-lg p-5">
+        <h2 class="font-regular text-2xl mb-4">ARTISTS</h2>
 
-            <h3 class="font-light text-md text-sm pr-3">{{firstArtist.name}}</h3>
-        </router-link>
+        <div class="grid gap-3">
+            <router-link
+                v-for="artist in artists"
+                :key="artist.id"
+                :to="{name: 'ArtistDetailPage', params: {id: artist.id}}"
+                class="flex items-center cursor-pointer gap-2 hover:text-dominant hover:bg-gray-600 transition rounded-lg bg-gray-700"
+            >
+                <div class="w-14 mr-4 aspect-square overflow-hidden bg-green-50 rounded-l-lg">
+                    <img v-if="artist.image_url" :src="artist.image_url" :alt="artist.name" class="w-full h-full object-cover">
+                </div>
+
+                <h3 class="font-light pr-3 text-ellipsis ">{{artist.name}}</h3>
+            </router-link>
+        </div>
     </div>
 </template>
 
-<script lang="ts">
-import {defineComponent, PropType} from "vue"
+<script setup lang="ts">
+import {computed, defineProps} from "vue"
 import {Artist} from "@/store/modules/artist.types"
 
-export default defineComponent({
-    props: {
-        artists: {
-            type: Object as PropType<Artist[]>,
-            required: true,
-        }
-    },
+const props = defineProps<{artists: Artist[]}>()
 
-    computed: {
-        firstArtist(): Artist {
-            return this.artists[0]
+const artists = computed(() => {
+    return removeDuplicates(props.artists)
+})
+
+function removeDuplicates(artists: Artist[]) {
+    const filteredGenres = []
+    const existingGenres: string[] = []
+
+    for (let i = 0; i < artists.length; i++) {
+        const name = artists[i].name
+        if (!existingGenres.includes(name)) {
+            existingGenres.push(name)
+            filteredGenres.push(artists[i])
         }
     }
-})
+
+    return filteredGenres
+}
+
 </script>

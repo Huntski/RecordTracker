@@ -97,8 +97,8 @@ export default defineComponent({
 
             if (this.movableGallery) {
                 if (!this.movableGallery.moving) {
-                    this.movableGallery.moveBubbleToCenterOfScreen(element)
                     this.$router.push({name: 'AlbumDetailPage', params: {id: id}})
+                    this.movableGallery.moveBubbleToCenterOfScreen(element)
                 }
             }
         },

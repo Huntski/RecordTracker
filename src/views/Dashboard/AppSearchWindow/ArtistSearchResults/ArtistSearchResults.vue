@@ -19,11 +19,11 @@
 
             <div class="px-5">
                 <div class="flex items-center gap-3 font-major mb-3">
-                    <h2 class="font-bold">{{ artist.name }}</h2>
-                    <h3 class="text-gray-300 italic text-xs">{{ artist.real_name }}</h3>
+                    <h2 class="font-bold text-lg">{{ artist.name }}</h2>
+                    <h3 class="text-gray-300 italic">{{ artist.real_name }}</h3>
                 </div>
 
-                <p class="text-xs italic text-ellipsis text-gray-200 font-light" v-show="artist.bio">{{ artist.bio.substring(0,170) }}...</p>
+                <p class="text-sm italic text-ellipsis text-gray-200 font-light" v-show="artist.bio">{{ artist.bio.substring(0,130) }}...</p>
             </div>
         </router-link>
 

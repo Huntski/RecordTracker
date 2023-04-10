@@ -48,3 +48,7 @@ body {
 .pointer-events-parent-none * {
     pointer-events: auto;
 }
+
+.selectable {
+    -webkit-user-select: text;
+}

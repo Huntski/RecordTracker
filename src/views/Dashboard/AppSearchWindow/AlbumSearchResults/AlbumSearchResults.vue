@@ -3,7 +3,7 @@
         <div v-for="album in albums" :key="album.id" @click="openAlbum(album.id)" class="relative rounded overflow-hidden cursor-pointer">
             <div>
                 <div class="bg-overlay absolute w-full h-full opacity-10 hover:opacity-0"></div>
-                <img :src="album.cover_url" :alt="album.title" class="album-cover">
+                <img :src="album.cover_url" :alt="album.title" class="aspect-square">
             </div>
 
 <!--            <p class="text-xs mt-1 mb-3 text-gray-300">{{album.title}}</p>-->
@@ -37,7 +37,8 @@ export default defineComponent({
 </script>
 
 <style>
-.album-cover {
-    aspect-ratio: 1 / 1;
+.search-results {
+    max-height: 0;
+    transition: max-height 100ms ease-out, min-height 100ms ease-out;
 }
 </style>

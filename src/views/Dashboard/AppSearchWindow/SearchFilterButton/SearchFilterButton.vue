@@ -1,6 +1,6 @@
 <template>
     <button
-        class="filter-button flex items-center justify-center px-4 py-2 gap-3 text-xs rounded active:bg-gray-800"
+        class="filter-button flex items-center justify-center px-4 py-2 gap-3 rounded active:bg-gray-800"
         :class="activeStyling"
         @click="handleClickEvent"
     >
