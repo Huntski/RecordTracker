@@ -7,7 +7,7 @@
                 v-for="artist in artists"
                 :key="artist.id"
                 :to="{name: 'ArtistDetailPage', params: {id: artist.id}}"
-                class="flex items-center cursor-pointer gap-2 hover:text-dominant hover:bg-gray-600 transition rounded-lg bg-gray-700"
+                class="flex items-center cursor-pointer gap-2 hover:text-dominant hover:bg-gray-600 transition rounded bg-gray-700"
             >
                 <div class="w-14 mr-4 aspect-square overflow-hidden bg-green-50 rounded-l-lg">
                     <img v-if="artist.image_url" :src="artist.image_url" :alt="artist.name" class="w-full h-full object-cover">

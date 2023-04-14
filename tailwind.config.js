@@ -50,8 +50,8 @@ module.exports = {
         'tag': '#0E2061',
 
         'section': {
-          'start': '#303030',
-          'end': '#272727',
+          'start': '#1F1F1F',
+          'end': '#101010',
         },
 
         "overlay": "#00000090"

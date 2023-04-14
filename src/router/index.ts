@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw} from 'vue-router'
 import Dashboard from '../views/Dashboard'
 import AlbumDetailPage from "@/views/Dashboard/AlbumDetailPage"
 import ArtistDetailPage from "@/views/Dashboard/ArtistDetailPage"
 import AppSearchWindow from "@/views/Dashboard/AppSearchWindow"
+import EditArtistPage from "@/views/Dashboard/EditArtistPage"
 
 const routes: RouteRecordRaw[] = [
   {
@@ -25,12 +26,18 @@ const routes: RouteRecordRaw[] = [
         name: 'AppSearchWindow',
         component: AppSearchWindow,
       },
+
+      {
+        path: '/artist/:id/edit',
+        name: 'EditArtistPage',
+        component: EditArtistPage,
+      },
     ]
   },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: process.env.IS_ELECTRON ? createWebHashHistory() : createWebHistory(),
   routes
 })
 

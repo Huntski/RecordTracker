@@ -1,8 +1,8 @@
 <template>
-    <div class="relative flex gap-10 pt-20">
+    <div class="flex gap-10 pt-10">
         <div class="relative z-20">
             <div class="aspect-square bg-gray-800 rounded-2xl rounded-bl-none overflow-hidden w-80">
-                <img :src="props.artist.image_url" :alt="props.artist.name" class="w-full h-full object-cover">
+                <img :src="artist.image_url" :alt="artist.name" class="w-full h-full object-cover">
             </div>
 
             <div class="artist-image-underline"></div>
@@ -12,20 +12,23 @@
 
         <div class="relative z-0 w-full">
             <div class="relative pb-5 mb-5 artist-name">
-                <h1 class="text-5xl font-major font-bold text-dominant-secondary pb-2">{{props.artist.name}}</h1>
-                <h2 class="text-lg font-major">{{props.artist.real_name}}</h2>
+                <h1 class="text-5xl font-major font-bold text-dominant-secondary pb-2">{{artist.name}}</h1>
+                <h2 class="text-lg font-major">{{artist.real_name}}</h2>
             </div>
 
-            <p class="whitespace-pre-line text-gray-300 leading-loose h-72 overflow-y-scroll base-scrollbar pr-5 selectable">{{props.artist.bio}}</p>
+            <p class="whitespace-pre-line text-gray-300 leading-loose h-56 overflow-hidden base-scrollbar pr-5 selectable">{{artist.bio}}</p>
         </div>
+
+<!--        <BiographyModal :artist="artist" />-->
     </div>
 </template>
 
 <script lang="ts" setup>
 import {Artist} from "@/store/modules/artist.types"
 import {defineProps} from "vue"
+import BiographyModal from './BiographyModal.vue'
 
-const props = defineProps<{artist: Artist}>()
+defineProps<{artist: Artist}>()
 </script>
 
 <style scoped>
@@ -56,9 +59,9 @@ const props = defineProps<{artist: Artist}>()
     content: "";
     position: absolute;
     left: 0;
-    bottom: -30%;
+    bottom: -47%;
     width: 1px;
-    height: 150px;
+    height: 120px;
     border-radius: 20px;
     background: #4f4f4f;
     transform: translateY(-200%);
@@ -69,12 +72,12 @@ const props = defineProps<{artist: Artist}>()
     content: "";
     position: absolute;
     left: 0;
-    bottom: -60%;
+    bottom: -65%;
     width: 1px;
-    height: 100px;
+    height: 40px;
     border-radius: 20px;
     background: #4f4f4f;
-    transform: translateY(-200%);
+    transform: translateY(-250%);
     animation: slideInFromTop 500ms cubic-bezier(0.165, 0.84, 0.44, 1) forwards 500ms;
     z-index: 0;
 }
@@ -82,7 +85,7 @@ const props = defineProps<{artist: Artist}>()
     content: "";
     position: absolute;
     left: 0;
-    bottom: -73%;
+    bottom: -80%;
     width: 1px;
     height: 30px;
     border-radius: 20px;

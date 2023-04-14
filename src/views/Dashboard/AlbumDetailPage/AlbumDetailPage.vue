@@ -1,10 +1,6 @@
 <template>
-    <div class="absolute top-0 left-0 bottom-0 right-0 m-auto w-full h-full flex justify-center items-center">
-        <BackgroundOverlay @click="closeWindow" />
-
-        <loadingSpinner v-if="!album" class="w-10 opacity-0" />
-
-        <div v-else class="animate--reveal relative album-overview bg-gray-500 box-border rounded-xl text-white overflow-hidden">
+    <DashboardPageModal>
+        <div class="animate--reveal relative album-overview bg-gradient-to-br to-gray-900 from-gray-800 box-border rounded-xl text-white overflow-hidden">
             <AlbumDetailHeader />
 
             <div class="grid grid-cols-3 gap-10 justify-center h-full relative pb-1">
@@ -19,78 +15,40 @@
 
                     <div class="absolute right-0 w-[90%] ml-auto h-0.5 bg-gray-200 opacity-40"></div>
 
-                    <div class="flex gap-5 mb-5 grid grid-cols-5 pt-10">
+                    <div class="flex gap-5x mb-5 grid grid-cols-5 pt-10">
                         <MetaData class="col-span-3" :album="album" />
 
                         <ArtistLinks class="mb-3 h-full col-span-2" :artists="artists" />
                     </div>
 
-                    <TrackList class="mb-10 mt-10" :tracks="tracks" />
+                    <TrackList class="mb-32 mt-10" :tracks="tracks" />
                 </div>
             </div>
 
             <AlbumDetailFooter />
         </div>
-    </div>
+    </DashboardPageModal>
 </template>
 
-<script lang="ts">
-import BackgroundOverlay from "@/components/BackgroundOverlay"
-import {defineComponent} from "vue"
-import {Album, AlbumId} from "@/store/modules/album.types"
+<script lang="ts" setup>
 import {getAlbum, getAlbumArtists, getAlbumTracks} from "@/services/albumService"
-import {Track} from "@/store/modules/track.types"
-import {Artist} from "@/store/modules/artist.types"
-import loadingSpinner from "@/components/LoadingSpinner"
 import TrackList from "@/views/Dashboard/AlbumDetailPage/TrackList"
 import ArtistLinks from "@/views/Dashboard/AlbumDetailPage/ArtistLinks"
 import MetaData from "@/views/Dashboard/AlbumDetailPage/MetaData"
 import AlbumDetailHeader from "@/views/Dashboard/AlbumDetailPage/AlbumDetailHeader"
 import AlbumDetailFooter from "@/views/Dashboard/AlbumDetailPage/AlbumDetailFooter"
+import {useRoute} from "vue-router"
+import {DashboardPageModal} from "@/views/Dashboard/@components"
 
-export class AlbumDetailPageData {
-    album?: Album = undefined
-    artists: Artist[] = []
-    tracks: Track[] = []
-}
+const id = String(useRoute().params.id)
 
-export default defineComponent( {
-    data() {
-        return new AlbumDetailPageData()
-    },
-
-    methods: {
-        async getAlbumData(albumId: AlbumId): Promise<void> {
-            this.album = await getAlbum(albumId)
-            this.artists = await getAlbumArtists(albumId)
-            this.tracks = await getAlbumTracks(albumId)
-        },
-
-        closeWindow() {
-            this.$router.push({name: 'Dashboard'})
-        },
-
-        handleKeyPressEvent(e: KeyboardEvent) {
-            if (e.key === 'Escape') {
-                this.closeWindow()
-
-                document.onkeydown = null
-            }
-        }
-    },
-
-    mounted() {
-        this.getAlbumData(this.$route.params.id as string)
-        document.addEventListener('keydown', this.handleKeyPressEvent)
-    },
-
-    components: {AlbumDetailFooter, BackgroundOverlay, loadingSpinner, TrackList, ArtistLinks, AlbumDetailHeader, MetaData}
-})
+const album = await getAlbum(id)
+const artists = await getAlbumArtists(id)
+const tracks = await getAlbumTracks(id)
 </script>
 
 <style>
 .album-overview {
-    background: linear-gradient(to bottom right, #242424, #252525);
     animation: fadeIn 200ms ease-out;
     width: 95vw;
     height: 90vh;

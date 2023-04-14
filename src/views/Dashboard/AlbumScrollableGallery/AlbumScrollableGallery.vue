@@ -12,7 +12,7 @@
                 :id="album.id"
                 @click="openAlbum"
             >
-                <img :src="album.cover_url" :alt="album.title" draggable="false" class="pointer-events-none">
+<!--                <img :src="album.cover_url" :alt="album.title" draggable="false" class="pointer-events-none">-->
             </div>
         </div>
     </div>

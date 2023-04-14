@@ -2,6 +2,7 @@
     <div>
         <div class="mb-5 flex gap-3">
             <button v-for="(tracks, key) in albumSides"
+                    v-show="displayedTracks"
                     :key="key"
                     class="aspect-square w-10  bg-gray-700 text-dominant rounded"
                     :class="{ 'bg-gray-400 text-white' : selected !== key }"
@@ -9,13 +10,12 @@
             >{{ key }}</button>
         </div>
 
-        <div ref="tracklist" class="animate--fade tracklist border border-gray-700 rounded-lg base-scrollbar shadow border overflow-hidden">
+        <div ref="tracklist" class="animate--fade tracklist border border-gray-700 rounded-lg base-scrollbar shadow border overflow-hidden mb-12">
             <div ref="tracks" class="tracks">
                 <div v-for="(track, index) in displayedTracks"
                      :key="track.id"
                      class="track flex items-center ml-5 py-3 border-b border-solid border-gray-700 last:border-none"
                      :class="{'border-b' : index !== tracks.length - 1}"
-                     @enter="onEnter"
                 >
                     <span class="w-10 text-gray-300">{{track.position}}</span>
                     <span class="ml-5">{{track.title}}</span>
@@ -73,13 +73,11 @@ export default defineComponent({
                 }
             }
 
-            console.log(sides, this.tracks)
-
             return sides
         },
 
         displayedTracks() {
-            if (!Object.keys(this.albumSides).length) {
+            if (Object.keys(this.albumSides).length <= 1) {
                 return this.tracks
             }
 
@@ -114,7 +112,7 @@ export default defineComponent({
 
     created() {
         this.updateHeight()
-    }
+    },
 })
 </script>
 
